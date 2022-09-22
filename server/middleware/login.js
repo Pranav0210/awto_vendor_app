@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const {hash, compare} = require('bcryptjs')
+const {hash, compareSync} = require('bcryptjs')
 const Vendor = require('../db/models/vendor')
 require('dotenv').config();
 
@@ -12,7 +12,7 @@ const login = (req, res)=>{
         .then((doc)=>{
             console.log(doc); 
 
-            if(password === doc.password){
+            if(compareSync(password,doc.password)){
                 if(authHead && authHead.startsWith("Bearer ")){
                     jwtToken = authHead.split(' ')[1];
                     
